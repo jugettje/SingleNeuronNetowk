@@ -1,0 +1,72 @@
+@startuml
+
+    class main.js{
+        -require TrainingDataCollection.js
+        -require NeuralNetwork.js
+        -require Express.js
+        -require http.js
+        -require socket.io.js
+        app : Express
+        io : socket.io
+        PORT : int
+    }
+
+    class NeuralNetwork.js{
+        -require Matrix.js
+        ..public..
+        constructor(float, int)
+        train(Matrix, Matrix, int)
+        think(Matrix)
+        calculateWeights(Matrix, Matrix)
+        calculateScore(Matrix, Matrix)
+        ..static..
+        float sigmoid(x)
+        float sigmoidDerivative(x)
+        float sign(x)
+    }
+
+    class Matrix.js{
+        changes the matrix itself
+        ..
+        setAllValuesTo(float)
+        replaceAt(int, int, float)
+        randomise(int, int)
+        ..
+        returns a new matrix
+        ..
+        constructor(int, int)
+        transpose(void)
+        subtract(float || Matrix)
+        add(float || Matrix)
+        multiply(float || Matrix)
+        elementWiseMultiply(Matrix)
+        ..returns this..
+        doAtEveryElement(function)
+        ..no returns..
+        printToConsole(void)
+        everyElement(function)
+    }
+
+    class Dot.js{
+        ..public..
+        constructor(float, float)
+        print(void)
+        calculateLabel(void)
+        ..static..
+        lineFormula(int, float, float)
+    }
+
+    class trainingDataCollection.js{
+        -require Dot.js
+        -require Matrix.js
+        ..public..
+        constructor(int, int, int)
+        getInputDatasetAt(int)
+        getOutputDatasetAt(int)
+    }
+
+    main.js --> NeuralNetwork.js
+    main.js --* Matrix.js
+    main.js --* trainingDataCollection.js
+    trainingDataCollection.js --* Dot.js
+@enduml

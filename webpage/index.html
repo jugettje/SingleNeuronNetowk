@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script type='text/javascript' >
+        top.glob = io();
+        top.glob.on('test', (msg)=>
+        {
+            console.log(msg);
+        });
+        
+    </script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <title>network graphs</title>
+</head>
+<body>
+    <script> 
+        function call()
+        {
+            top.glob.emit('test', 'this actually works');
+            console.log("working");
+        }
+    </script>
+    <div id="graph1" style="width:2000px;height:1200px;float: left;"></div>
+    <script src="http://192.168.1.213:3000/plotter.js"></script>
+    
+    <button onClick = "addData()">Click me!</button>
+</body>
+</html>

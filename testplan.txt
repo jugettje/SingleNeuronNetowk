@@ -1,0 +1,186 @@
+graph1 -> given settings
+-> x: dataPerInput
+-> Y: itterations
+-> z: amountOfLearningData
+-> label : 
+
+<--> update 
+graph2 -> changes in network
+-> x: itteration
+-> y: learning rate
+-> z: score
+-> label : 
+
+afther every training session fill this json.
+send it to the webpage to display the graph.
+
+graph2data = 
+{
+    x : [],
+    y : [],
+    z : [],
+    label : []
+}
+
+settingsOptimal : 
+    {
+        dataPerInput : 1000,
+        dataSets : 5000,
+        networkInputs : 3,
+        learningRate : 0.02,
+        itterations : 50,
+        amountOfLearningData : 100,
+        itterationLoops : 1,
+        amountOfTestData : 4900
+    },
+
+
+    onClick = "call()"
+
+    function call()
+        {
+            socket.emit('test', 'this actually works');
+        }
+
+
+
+[1] do a training loop
+[2] emit data
+[3] return to the main program
+[4] if not done (outside of the function)
+[5]-> [1] (call function again)
+[6] done?-> sleep
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+cluster makes a new proram every time you DUMB FUCK!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+get rid of every fucking loop and make states :)
+gl with that fuckhead
+
+
+found this on the interwebs. read it, know it & live by it!
+----------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------
+
+const crypto = require('crypto')
+
+const arr = new Array(200).fill('something')
+function processChunk() {
+  if (arr.length === 0) {
+    // code that runs after the whole array is executed
+  } else {
+    console.log('processing chunk');
+    // pick 10 items and remove them from the array
+    const subarr = arr.splice(0, 10)
+    for (const item of subarr) {
+      // do heavy stuff for each item on the array
+      doHeavyStuff(item)
+    }
+    // Put the function back in the queue
+    setImmediate(processChunk)    <<<<<------- fucking important !!!!!!
+  }
+}
+
+processChunk()
+
+function doHeavyStuff(item) {
+  crypto.createHmac('sha256', 'secret').update(new Array(10000).fill(item).join('.')).digest('hex')
+}
+
+// This is just for confirming that we can continue
+// doing things
+let interval = setInterval(() => {
+  console.log('tick!')
+  if (arr.length === 0) clearInterval(interval)
+}, 0)
+
+----------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------
+---> actual training 
+
+for( learning rate changes) //change to if(not at target)
+    for(itterations) //split up in small parts
+        let deltaWeigths = this.calculateWeights(trainingInputs, trainingOutputs);
+        this.weights = this.weights.add(deltaWeigths);
+    END_FOR
+
+    // actually should change the weights here .....
+    // that is a blacking task ...
+    //fuck ... :(
+
+    setImmediate( thisfunction ) //put this function back in the function queue
+END_FOR
+
+DUMB FUCK, DUMB FUCK, DUMB FUCK!!!
+achieved efficiency   DUMB FUCK!!!
+STONKS!    DUMB FUCK, DUMB FUCK!!!
+DUMB FUCK, DUMB FUCK, DUMB FUCK!!!
+
+
+
+2 aparte programma's?
+eentje doet alle kanker en zet het in een database
+andere haald de kanker uit de database en geeft het weer
+might actually work?!
+
+
+
+
+
+    console.log(trainNetwork(settings));
+    let scoreArraySize = 100;
+    let scoreArray = new Array(scoreArraySize); 
+    let index = 0;
+    let learningRate = settings.learningRate; 
+    let beforeLearning = moment();
+    let itterations = 0;
+    let highestScore = 0;
+    let hsIndex = 0;
+    let htmlData = 
+    {
+        x : 0,
+        y : 0,
+        z : 0
+    }
+    if (learningRate*100 > 0.1)  //do
+    {
+        learningRate = 0.0;  
+        let score = trainNetwork(settings);
+        console.log(`score : ${score}`)
+        learningRate = (100.0 - score)/50;
+
+        htmlData.x = itterations;
+        htmlData.y = learningRate;
+        htmlData.z = score;
+
+        //console.log(`learning rate = ${learningRate}`);
+        settings.learningRate = learningRate;
+        scoreArray[index] = score;
+
+        index++;
+        itterations++
+        if(index > scoreArraySize) { index = 0;}
+        //&& scoreArray[index] < scoreArray[index -1]
+        if(index > 1  && scoreArray[index-1] < scoreArray[index -2])
+        {
+            console.log(`shits broken... difference = ${scoreArray[index-1] - scoreArray[index -2]}`);
+        }
+
+        setTimeout(()=>
+        {
+            io.emit('getNewDataPoint', htmlData);
+        }, 1)
+        //io.emit('test', {test : 1});
+        //sendSomething();
+
+    }//while
+
+
+
+
+
+    <div id="graph2" style="width:50%;height:50%;float: left;"></div>

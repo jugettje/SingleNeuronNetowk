@@ -1,0 +1,17 @@
+--> main program index.js
+- initialise routes 
+-- use a function and return io
+
+- 
+
+
+
+
+
+
+
+
+
+
+
+
